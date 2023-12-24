@@ -1,27 +1,13 @@
 # About this project
-    When we need to make changes in the local folder and map it to the container folder volumes concepts come in handy
-    docker-compose is using non- default docker file (Dockerfile.dev) this config is done under build command. 
+    Learn about multi step build process in the Dockerfile.
+    When Dockerfile sees more than one FROM command then it gets executed as several steps.
+    In this project, 
+    1. we are going to build the project as first step
+    2. copy build output from first step in to other directory in second step and serve it without running local server inside container.
 
-## map volumes in command
-    docker run -it -p 3000:3000 -v /home/node/app/node_modules -v ~/exercises/frontend:/home/node/app iamyuvi:frontend
-
-## explanation of command :
-execute docker(docker run) 
-- in provide input(-i) and format mode(-t) ,
-- map the local machine port with the port running inside docker container (-p machineport:containerport)
-- create reference from the continaer directory to local directoty (-v localmachinedirectory:containerdirectory)
-- create a placholder or inform to the docker that do not reference this particular directory to any other directory.
-
-    why do we create placeholder?
-
-        - while we create references in local directory node_modules does not exists, in this case container node_modules directory could be deleted. so it is the way to tell docker explicitly do not touch this particular foler when performing reference.
-
-    why do we need to create reference?
-    
-        - when we make some changes in the local folder we expect it to be reflected in the output served by docker container
-
-# modify start command on running container
- docker exec -it b582f61c8680 npm run test - run existing container with different startup command passed through terminal
+## command to execute in this project
+    - docker build . (executes multi steps and create an imageId)
+    - docker run -p 8080(localSystemPort):80(nginxDefaultPort) [imageId]
 
 
 # Getting Started with Create React App
